@@ -8,7 +8,7 @@ use App\Models\Post;
 /**
  * Posts controller
  *
- * PHP version 5.4
+ * PHP version 7.1
  */
 class Posts extends \Core\Controller
 {
@@ -34,7 +34,14 @@ class Posts extends \Core\Controller
      */
     public function addNewAction()
     {
-        echo 'Hello from the addNew action in the Posts controller!';
+        $data = array();
+        if(isset($_POST['submit'])) {
+            $data = $_POST;
+        }
+
+        View::renderTemplate('Posts/add.html', [
+            'data' => $data
+        ]);
     }
     
     /**

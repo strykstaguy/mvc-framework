@@ -5,7 +5,7 @@ namespace App;
 /**
  * Application configuration
  *
- * PHP version 5.4
+ * PHP version 7.1
  */
 class Config
 {
@@ -32,7 +32,7 @@ class Config
      * Database password
      * @var string
      */
-    const DB_PASSWORD = '';
+    const DB_PASSWORD = 'wilson82';
 
     /**
      * Show or hide error messages on screen

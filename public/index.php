@@ -3,20 +3,13 @@
 /**
  * Front controller
  *
- * PHP version 5.4
+ * PHP version 7.1
  */
 
 /**
  * Composer
  */
 require '../vendor/autoload.php';
-
-
-/**
- * Twig
- */
-Twig_Autoloader::register();
-
 
 /**
  * Error and Exception handling

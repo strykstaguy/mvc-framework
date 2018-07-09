@@ -5,7 +5,7 @@ namespace Core;
 /**
  * View
  *
- * PHP version 5.4
+ * PHP version 7.1
  */
 class View
 {
@@ -13,10 +13,11 @@ class View
     /**
      * Render a view file
      *
-     * @param string $view  The view file
-     * @param array $args  Associative array of data to display in the view (optional)
+     * @param string $view The view file
+     * @param array $args Associative array of data to display in the view (optional)
      *
      * @return void
+     * @throws \Exception
      */
     public static function render($view, $args = [])
     {
@@ -34,10 +35,13 @@ class View
     /**
      * Render a view template using Twig
      *
-     * @param string $template  The template file
-     * @param array $args  Associative array of data to display in the view (optional)
+     * @param string $template The template file
+     * @param array $args Associative array of data to display in the view (optional)
      *
      * @return void
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public static function renderTemplate($template, $args = [])
     {
