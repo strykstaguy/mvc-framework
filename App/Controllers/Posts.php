@@ -39,7 +39,7 @@ class Posts extends \Core\Controller
             $data = $_POST;
         }
 
-        View::renderTemplate('Posts/add.html', [
+        View::render('Posts/add.html', [
             'data' => $data
         ]);
     }
