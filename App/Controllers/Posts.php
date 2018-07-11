@@ -31,6 +31,7 @@ class Posts extends \Core\Controller
      * Show the add new page
      *
      * @return void
+     * @throws \Exception
      */
     public function addNewAction()
     {

@@ -12,21 +12,25 @@ class Router
 
     /**
      * Associative array of routes (the routing table)
+     *
      * @var array
      */
     protected $routes = [];
 
     /**
      * Parameters from the matched route
+     *
      * @var array
      */
-    protected $params = [];
+    private $params = [
+        'action' => 'index'
+    ];
 
     /**
      * Add a route to the routing table
      *
-     * @param string $route  The route URL
-     * @param array  $params Parameters (controller, action, etc.)
+     * @param string $route The route URL
+     * @param array $params Parameters (controller, action, etc.)
      *
      * @return void
      */
@@ -65,22 +69,19 @@ class Router
      *
      * @return boolean  true if a match found, false otherwise
      */
-    public function match($url)
+    private function match($url)
     {
+        $this->params['controller'] = $url;
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
-                // Get named capture group values
                 foreach ($matches as $key => $match) {
                     if (is_string($key)) {
-                        $params[$key] = $match;
+                        $this->params[$key] = $match;
                     }
                 }
-
-                $this->params = $params;
                 return true;
             }
         }
-
         return false;
     }
 
@@ -101,6 +102,7 @@ class Router
      * @param string $url The route URL
      *
      * @return void
+     * @throws \Exception
      */
     public function dispatch($url)
     {
