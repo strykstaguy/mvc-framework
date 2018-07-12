@@ -37,6 +37,7 @@ class Home extends \Core\Controller
      * Show the index page
      *
      * @return void
+     * @throws \Exception
      */
     public function indexAction()
     {
@@ -50,5 +51,6 @@ class Home extends \Core\Controller
             'name'    => 'Dave',
             'colours' => ['red', 'green', 'blue']
         ]);
+
     }
 }

@@ -18,13 +18,25 @@ class Router
     protected $routes = [];
 
     /**
+     * Default controller
+     *
+     * @var array
+     */
+    protected $defaultController = 'home';
+
+    /**
+     * Default action
+     *
+     * @var array
+     */
+    protected $defaultMethod = 'index';
+
+    /**
      * Parameters from the matched route
      *
      * @var array
      */
-    private $params = [
-        'action' => 'index'
-    ];
+    protected $params = [];
 
     /**
      * Add a route to the routing table
@@ -69,16 +81,17 @@ class Router
      *
      * @return boolean  true if a match found, false otherwise
      */
-    private function match($url)
+    public function match($url)
     {
-        $this->params['controller'] = $url;
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
+                // Get named capture group values
                 foreach ($matches as $key => $match) {
                     if (is_string($key)) {
-                        $this->params[$key] = $match;
+                        $params[$key] = $match;
                     }
                 }
+                $this->params = $params;
                 return true;
             }
         }
@@ -109,6 +122,7 @@ class Router
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {
+            //$controller = (!empty($this->params['controller']) ? $this->params['controller'] : $this->defaultController);
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
             $controller = $this->getNamespace() . $controller;
@@ -116,8 +130,9 @@ class Router
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
 
-                $action = $this->params['action'];
+                $action = (!empty($this->params['action']) ? $this->params['action'] : $this->defaultMethod);
                 $action = $this->convertToCamelCase($action);
+
 
                 if (is_callable([$controller_object, $action])) {
                     $controller_object->$action();
