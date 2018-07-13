@@ -29,6 +29,12 @@ class Config
     const DB_USER = 'root';
 
     /**
+     * Database charset
+     * @var string
+     */
+    const DB_CHARSET = 'utf8';
+
+    /**
      * Database password
      * @var string
      */

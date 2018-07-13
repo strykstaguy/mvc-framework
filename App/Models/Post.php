@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use PDO;
-
+use Core\Database;
 /**
  * Post model
  *
@@ -20,10 +20,16 @@ class Post extends \Core\Model
     public static function getAll()
     {
         try {
-            $db = static::getDB();
 
-            $stmt = $db->query('SELECT id, title, content FROM posts ORDER BY created_at');
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $database   = Database::openConnection();
+            $query  = "SELECT posts.id AS id, posts.title, posts.content ";
+            $query .= "FROM posts ";
+            $query .= "ORDER BY posts.created_at DESC ";
+            //$query .= "LIMIT $limit OFFSET $offset";
+            $database->prepare($query);
+            $database->execute();
+            $results = $database->fetchAllAssociative();
+            $database->closeConnection();
 
             return $results;
             
