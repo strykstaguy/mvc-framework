@@ -199,6 +199,10 @@ class Router
      */
     protected function removeQueryStringVariables($url)
     {
+
+        //Remove trailing back slash
+        $url = rtrim($url, '/');
+
         if ($url != '') {
             $parts = explode('&', $url, 2);
 
