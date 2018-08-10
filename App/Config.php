@@ -12,37 +12,57 @@ class Config
 
     /**
      * Database host
+     *
      * @var string
      */
     const DB_HOST = 'localhost';
 
     /**
      * Database name
+     *
      * @var string
      */
     const DB_NAME = 'mvc';
 
     /**
      * Database user
+     *
      * @var string
      */
     const DB_USER = 'root';
 
     /**
-     * Database charset
-     * @var string
-     */
-    const DB_CHARSET = 'utf8';
-
-    /**
      * Database password
+     *
      * @var string
      */
     const DB_PASSWORD = 'wilson82';
 
     /**
      * Show or hide error messages on screen
+     *
      * @var boolean
      */
     const SHOW_ERRORS = true;
+
+    /**
+     * Secret key for hashing
+     *
+     * @var boolean
+     */
+    const SECRET_KEY = 'your-secret-key';
+
+    /**
+     * Mailgun API key
+     *
+     * @var string
+     */
+    const MAILGUN_API_KEY = 'your-mailgun-api-key';
+
+    /**
+     * Mailgun domain
+     *
+     * @var string
+     */
+    const MAILGUN_DOMAIN = 'your-mailgun-domain';
 }
