@@ -39,6 +39,13 @@ class Config
     const DB_PASSWORD = 'wilson82';
 
     /**
+     * Database name
+     *
+     * @var string
+     */
+    const DB_CHARSET = 'utf8';
+
+    /**
      * Show or hide error messages on screen
      *
      * @var boolean
