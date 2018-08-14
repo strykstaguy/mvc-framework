@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
-use \App\Auth;
+use \App\Config;
 
 /**
  * Home controller
@@ -21,15 +21,6 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
-        /*
-        View::render('Home/index.php', [
-            'name'    => 'Dave',
-            'colours' => ['red', 'green', 'blue']
-        ]);
-        */
-        View::render('Home/index.php');
-
-        //View::renderTemplate('Home/index.html');
-
+        View::renderWithLayout(Config::VIEWS_PATH . 'Home/index.php');
     }
 }

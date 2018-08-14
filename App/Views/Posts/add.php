@@ -1,15 +1,9 @@
-{% extends "base.html" %}
-
-{% block title %}Add Post{% endblock %}
-
-{% block body %}
-
-    <h1>Add Post</h1>
+<h3>Add Post</h3>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <form name="sentMessage" id="contactForm" method="post" action="/posts/add-new">
+            <form name="sentMessage" id="contactForm" method="post" action="/posts/update">
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label>Title</label>
@@ -17,22 +11,23 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <div class="form-group floating-label-form-group controls">
                         <label>Content</label>
                         <textarea class="form-control" name="content" required></textarea>
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <button type="text" class="btn btn-primary" name="submit">Ask</button>
+                    <button type="text" class="btn btn-primary" name="submit">Add Post</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<pre>
-    {{ dump(data) }}
-</pre>
-
-{% endblock %}
+<?php
+    if (!empty($data))
+    {
+        print("<pre>".print_r($data,true)."</pre>");
+    }
+?>

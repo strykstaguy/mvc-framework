@@ -3,15 +3,31 @@
 namespace App\Controllers;
 
 use \Core\View;
-use App\Models\Post;
+use \App\Models\Post;
+use \App\Config;
+use \App\Auth;
+use \App\Flash;
 
 /**
  * Posts controller
  *
  * PHP version 7.1
  */
-class Posts extends \Core\Controller
+class Posts extends Authenticated
 {
+
+    /**
+     * Before filter - called before each action method
+     *
+     * @return void
+     */
+    protected function before()
+    {
+        parent::before();
+
+        $this->user = Auth::getUser();
+        $this->post = new Post();
+    }
 
     /**
      * Show the index page
@@ -24,10 +40,7 @@ class Posts extends \Core\Controller
     public function indexAction()
     {
         $posts = Post::getAll();
-
-        View::renderTemplate('Posts/index.html', [
-            'posts' => $posts
-        ]);
+        View::renderWithLayout(Config::VIEWS_PATH . 'Posts/index.php', $posts);
     }
 
     /**
@@ -38,16 +51,29 @@ class Posts extends \Core\Controller
      */
     public function addNewAction()
     {
-        $data = array();
-        if(isset($_POST['submit'])) {
-            $data = $_POST;
-        }
-
-        View::renderTemplate('Posts/add.html', [
-            'data' => $data
-        ]);
+        View::renderWithLayout(Config::VIEWS_PATH . 'Posts/add.php');
     }
-    
+
+    /**
+     * Update the profile
+     *
+     * @return void
+     */
+    public function updateAction()
+    {
+        if ($this->post->addPost($_POST)) {
+
+            Flash::addMessage('Changes saved');
+
+            $this->redirect('/posts/index');
+
+        } else {
+
+            View::renderWithLayout(Config::VIEWS_PATH . 'Posts/add.php');
+
+        }
+    }
+
     /**
      * Show the edit page
      *
@@ -57,6 +83,6 @@ class Posts extends \Core\Controller
     {
         echo 'Hello from the edit action in the Posts controller!';
         echo '<p>Route parameters: <pre>' .
-             htmlspecialchars(print_r($this->route_params, true)) . '</pre></p>';
+            htmlspecialchars(print_r($this->route_params, true)) . '</pre></p>';
     }
 }

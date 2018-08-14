@@ -18,6 +18,9 @@ error_reporting(E_ALL);
 set_error_handler('Core\Error::errorHandler');
 set_exception_handler('Core\Error::exceptionHandler');
 
+define('BASE_DIR', str_replace("\\", "/", dirname(__DIR__)));
+define('APP',  BASE_DIR . "/App/");
+
 /**
  * Sessions
  */

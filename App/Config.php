@@ -72,4 +72,12 @@ class Config
      * @var string
      */
     const MAILGUN_DOMAIN = 'your-mailgun-domain';
+
+    /**
+     * View Path
+     *
+     * @var string
+     */
+
+    const VIEWS_PATH = APP . "Views/";
 }
