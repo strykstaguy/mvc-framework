@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Flash;
+use \App\Config;
 
 /**
  * Profile controller
@@ -31,9 +32,9 @@ class Profile extends Authenticated
      *
      * @return void
      */
-    public function showAction()
+    public function viewAction()
     {
-        View::renderTemplate('Profile/show.html', [
+        View::renderWithLayout(Config::VIEWS_PATH . 'Profile/view.php', [
             'user' => $this->user
         ]);
     }
@@ -45,7 +46,7 @@ class Profile extends Authenticated
      */
     public function editAction()
     {
-        View::renderTemplate('Profile/edit.html', [
+        View::renderWithLayout(Config::VIEWS_PATH . 'Profile/edit.php', [
             'user' => $this->user
         ]);
     }
@@ -61,11 +62,11 @@ class Profile extends Authenticated
 
             Flash::addMessage('Changes saved');
 
-            $this->redirect('/profile/show');
+            $this->redirect('/profile/view');
 
         } else {
 
-            View::renderTemplate('Profile/edit.html', [
+            View::renderWithLayout(Config::VIEWS_PATH . 'Profile/edit.php', [
                 'user' => $this->user
             ]);
 

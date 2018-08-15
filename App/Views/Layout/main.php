@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/styles.css" />
 
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
 </head>
 <body>
 
@@ -21,7 +25,7 @@
                 <?php if ($current_user): ?>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $current_user->name; ?> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/profile/show"><i class="icon-cog"></i> Profile</a></li>
+                            <li><a href="/profile/view"><i class="icon-cog"></i> Profile</a></li>
                             <li class="divider"></li>
                             <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
                         </ul>
@@ -37,23 +41,17 @@
     <div class="row">
         <div class="col-md-3">
             <div id="sidebar" class="well sidebar-nav">
-                <h5><small><b>POSTS</b></small></h5>
+                <h5><small><b>MAIN</b></small></h5>
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="/posts">Home</a></li>
-                    <li><a href="/posts/add-new">Add</a></li>
-                </ul>
-                <h5><small><b>USERS</b></small></h5>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href="#">List</a></li>
-                    <li><a href="#">Manage</a></li>
+                    <li class="active"><a href="/posts">Posts</a></li>
+                    <li><a href="/posts/add-new">Add Post</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-md-9">
             <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Library</a></li>
-                <li class="active">Data</li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/posts">Posts</a></li>
             </ol>
             <!-- Content Here -->
             <?php echo $flash; ?>
@@ -64,11 +62,6 @@
         </div>
     </div>
 </div>
-
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 
 </body>
 </html>

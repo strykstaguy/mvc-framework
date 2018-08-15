@@ -6,7 +6,7 @@ use \Core\View;
 use \App\Models\User;
 use \App\Auth;
 use \App\Flash;
-
+use \App\Config;
 /**
  * Login controller
  *
@@ -22,7 +22,7 @@ class Login extends \Core\Controller
      */
     public function newAction()
     {
-        View::renderTemplate('Login/new.html');
+        View::renderWithLayout(Config::VIEWS_PATH . 'Login/new.php');
     }
 
     /**

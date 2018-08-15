@@ -61,17 +61,34 @@ class Posts extends Authenticated
      */
     public function updateAction()
     {
-        if ($this->post->addPost($_POST)) {
+        //Adding New
+        if (array_key_exists('add', $_POST)) {
+            if ($this->post->addPost($_POST)) {
 
-            Flash::addMessage('Changes saved');
+                Flash::addMessage('Post Added');
 
-            $this->redirect('/posts/index');
+                $this->redirect('/posts/index');
 
-        } else {
+            } else {
 
-            View::renderWithLayout(Config::VIEWS_PATH . 'Posts/add.php');
+                View::renderWithLayout(Config::VIEWS_PATH . 'Posts/add.php');
 
+            }
+        //Edit Post
+        } elseif (array_key_exists('edit', $_POST)) {
+            if ($this->post->editPost($_POST)) {
+
+                Flash::addMessage('Changes saved');
+
+                $this->redirect('/posts/index');
+
+            } else {
+
+                View::renderWithLayout(Config::VIEWS_PATH . 'Posts/edit.php');
+
+            }
         }
+
     }
 
     /**
@@ -81,8 +98,35 @@ class Posts extends Authenticated
      */
     public function editAction()
     {
-        echo 'Hello from the edit action in the Posts controller!';
-        echo '<p>Route parameters: <pre>' .
-            htmlspecialchars(print_r($this->route_params, true)) . '</pre></p>';
+        $post_id = $this->route_params['id'];
+        $post = Post::findByID($post_id );
+
+        View::renderWithLayout(Config::VIEWS_PATH . 'Posts/edit.php', [
+            'post' => $post
+        ]);
+    }
+
+    /**
+     * Delete the post
+     *
+     * @return void
+     */
+    public function deleteAction()
+    {
+        $post_id = $this->route_params['id'];
+
+        if ($this->post->deletePost($post_id)) {
+
+            Flash::addMessage('Post Deleted');
+
+            $this->redirect('/posts/index');
+
+        } else {
+
+            Flash::addMessage('Unable to Delete Post');
+
+            $this->redirect('/posts/index');
+
+        }
     }
 }

@@ -126,7 +126,7 @@ class View
         }
 
         if ($layout) {
-            return include Config::VIEWS_PATH . "layout/main.php";
+            include Config::VIEWS_PATH . "layout/main.php";
         } else {
             include $view;
         }
