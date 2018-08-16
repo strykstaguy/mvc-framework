@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\User;
+use \App\Config;
 
 /**
  * Signup controller
@@ -20,7 +21,7 @@ class Signup extends \Core\Controller
      */
     public function newAction()
     {
-        View::renderTemplate('Signup/new.html');
+        View::renderWithLayout(Config::VIEWS_PATH . 'Signup/new.php');
     }
 
     /**
@@ -40,7 +41,7 @@ class Signup extends \Core\Controller
 
         } else {
 
-            View::renderTemplate('Signup/new.html', [
+            View::renderWithLayout(Config::VIEWS_PATH . 'Signup/new.php', [
                 'user' => $user
             ]);
 
@@ -54,7 +55,7 @@ class Signup extends \Core\Controller
      */
     public function successAction()
     {
-        View::renderTemplate('Signup/success.html');
+        View::renderWithLayout(Config::VIEWS_PATH . 'Signup/success.php');
     }
 
     /**
@@ -66,7 +67,7 @@ class Signup extends \Core\Controller
     {
         User::activate($this->route_params['token']);
 
-        $this->redirect('/signup/activated');
+        $this->redirect(Config::VIEWS_PATH . '/signup/activated');
     }
 
     /**
@@ -76,6 +77,6 @@ class Signup extends \Core\Controller
      */
     public function activatedAction()
     {
-        View::renderTemplate('Signup/activated.html');
+        View::renderWithLayout(Config::VIEWS_PATH . 'Signup/activated.php');
     }
 }

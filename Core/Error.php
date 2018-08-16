@@ -1,7 +1,7 @@
 <?php
 
 namespace Core;
-
+use \App\Config;
 /**
  * Error and exception handler
  *
@@ -60,7 +60,7 @@ class Error
 
             error_log($message);
 
-            View::renderTemplate("$code.html");
+            View::renderWithLayout(Config::VIEWS_PATH . "$code.html");
         }
     }
 }

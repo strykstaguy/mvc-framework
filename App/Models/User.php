@@ -281,10 +281,12 @@ class User extends \Core\Model
     {
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->password_reset_token;
 
-        $text = View::getTemplate('Password/reset_email.txt', ['url' => $url]);
-        $html = View::getTemplate('Password/reset_email.html', ['url' => $url]);
+        $html = '<html><body>';
+        $html .= '<h1>Password reset</h1>';
+        $html .= '<p>Please <a href="'.$url.'">click here to reset your password</a>.</p>';
+        $html .= '</body></html>';
 
-        Mail::send($this->email, 'Password reset', $text, $html);
+        Mail::send($this->email, 'Password reset', $html);
     }
 
     /**
@@ -368,15 +370,12 @@ class User extends \Core\Model
     {
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
 
-        $text = View::getTemplate('Signup/activation_email.txt', ['url' => $url]);
-        $html = View::getTemplate('Signup/activation_email.html', ['url' => $url]);
+        $html = '<html><body>';
+        $html .= '<h1>Account activation</h1>';
+        $html .= '<p>Thank you for signing up. Please <a href="'.$url.'">click here to activate your account</a>.</p>';
+        $html .= '</body></html>';
 
-        //Mail::send($this->email, 'Account activation', $text, $html);
-
-        $to_email = $this->email;
-        $subject = 'Account activation';
-        $headers = 'From: noreply@local';
-        mail($to_email,$subject,$text,$headers);
+        Mail::send($this->email, 'Account activation', $html);
     }
 
     /**

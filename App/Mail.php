@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\Config;
-use Mailgun\Mailgun;
-
 /**
  * Mail
  *
@@ -23,15 +20,15 @@ class Mail
      *
      * @return mixed
      */
-    public static function send($to, $subject, $text, $html)
+    public static function send($to, $subject, $message)
     {
-        $mg = new Mailgun(Config::MAILGUN_API_KEY);
-        $domain = Config::MAILGUN_DOMAIN;
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-        $mg->sendMessage($domain, ['from'    => 'your-sender@your-domain.com',
-                                   'to'      => $to,
-                                   'subject' => $subject,
-                                   'text'    => $text,
-                                   'html'    => $html]);
+        // More headers
+        $headers .= 'From: <noreply@local>' . "\r\n";
+
+        mail($to,$subject,$message,$headers);
     }
 }
