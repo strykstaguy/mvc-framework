@@ -14,6 +14,7 @@ use \Core\View;
  */
 class User extends \Core\Model
 {
+    protected $db;
 
     /**
      * Error messages
@@ -31,6 +32,8 @@ class User extends \Core\Model
      */
     public function __construct($data = [])
     {
+        $this->db = $this->getDatabase();
+
         foreach ($data as $key => $value) {
             $this->$key = $value;
         };

@@ -43,9 +43,16 @@
             <div id="sidebar" class="well sidebar-nav">
                 <h5><small><b>MAIN</b></small></h5>
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="/posts">Posts</a></li>
-                    <li><a href="/posts/add-new">Add Post</a></li>
+                    <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Posts <span class="caret"></span></a>
+                        <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+                            <li class="active"><a href="/posts">View Posts</a></li>
+                            <li><a href="/posts/add-new">New Post</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
                 </ul>
+
             </div>
         </div>
         <div class="col-md-9">
@@ -54,7 +61,18 @@
                 <li><a href="/posts">Posts</a></li>
             </ol>
             <!-- Content Here -->
-            <?php echo $flash; ?>
+
+            <?php $messages = \App\Flash::getMessages(); ?>
+            <?php if ($messages !== null): ?>
+
+                <?php foreach($messages as $message): ?>
+                    <div class="alert alert-<?php echo $message['type']; ?> alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <?php echo $message['body']; ?>
+                    </div>
+                <?php endforeach; ?>
+
+            <?php endif; ?>
 
             <?php include $view; ?>
 

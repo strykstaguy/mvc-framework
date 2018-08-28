@@ -19,24 +19,29 @@ class Post extends \Core\Model
      */
     public $errors = [];
 
+    protected $db;
+
+    public function __construct()
+    {
+        $this->db = $this->getDatabase();
+    }
+
     /**
      * Get all the posts as an associative array
      *
      * @return array
      */
-    public static function getAll()
+    public function getAllPosts()
     {
         try {
 
-            $database   = Database::openConnection();
             $query  = "SELECT posts.id AS id, posts.title, posts.content ";
             $query .= "FROM posts ";
             $query .= "ORDER BY posts.created_at DESC ";
-            //$query .= "LIMIT $limit OFFSET $offset";
-            $database->prepare($query);
-            $database->execute();
-            $results = $database->fetchAllAssociative();
-            $database->closeConnection();
+            $this->query($query);
+            $this->execute();
+
+            $results = $this->fetchAllAssociative();
 
             return $results;
             
@@ -52,19 +57,16 @@ class Post extends \Core\Model
      *
      * @return mixed User object if found, false otherwise
      */
-    public static function findByID($id)
+    public function findByID($id)
     {
-        $sql = 'SELECT * FROM posts WHERE id = :id';
+        $query = 'SELECT * FROM posts WHERE id = :id';
 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $this->query($query);
+        $this->bindValue(':id', $id, PDO::PARAM_INT);
+        $this->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $this->execute();
 
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-
-        $stmt->execute();
-
-        return $stmt->fetch();
+        return $this->fetchClass();
     }
 
     /**
@@ -83,14 +85,12 @@ class Post extends \Core\Model
 
         if (empty($this->errors)) {
 
-            $sql = "INSERT INTO `posts` (`title`, `content`) VALUES (:title, :content)";
+            $query = "INSERT INTO `posts` (`title`, `content`) VALUES (:title, :content)";
+            $this->query($query);
+            $this->bindValue(':title', $this->title, PDO::PARAM_STR);
+            $this->bindValue(':content', $this->content, PDO::PARAM_STR);
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
-            $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
-
-            return $stmt->execute();
+            return $this->execute();
         }
         return false;
     }
@@ -112,15 +112,14 @@ class Post extends \Core\Model
 
         if (empty($this->errors)) {
 
-            $sql = "UPDATE `posts` SET `title` = :title, `content` = :content WHERE `id` = :id";
+            $query = "UPDATE `posts` SET `title` = :title, `content` = :content WHERE `id` = :id";
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
-            $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
-            $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $this->query($query);
+            $this->bindValue(':title', $this->title, PDO::PARAM_STR);
+            $this->bindValue(':content', $this->content, PDO::PARAM_STR);
+            $this->bindValue(':id', $this->id, PDO::PARAM_INT);
 
-            return $stmt->execute();
+            return $this->execute();
         }
         return false;
     }
@@ -134,12 +133,11 @@ class Post extends \Core\Model
      */
     public function deletePost($id): bool
     {
-        $sql = "DELETE FROM `posts` WHERE `id` = :id";
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $query = "DELETE FROM `posts` WHERE `id` = :id";
+        $this->query($query);
+        $this->bindValue(':id', $id, PDO::PARAM_INT);
 
-        $response = $stmt->execute();
+        $response = $this->execute();
         return $response;
     }
 

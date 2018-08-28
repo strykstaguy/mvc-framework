@@ -15,6 +15,7 @@ use \App\Flash;
  */
 class Posts extends Authenticated
 {
+    protected $post;
 
     /**
      * Before filter - called before each action method
@@ -39,7 +40,7 @@ class Posts extends Authenticated
      */
     public function indexAction()
     {
-        $posts = Post::getAll();
+        $posts = $this->post->getAllPosts();
         View::renderWithLayout(Config::VIEWS_PATH . 'Posts/index.php', $posts);
     }
 
@@ -55,7 +56,7 @@ class Posts extends Authenticated
     }
 
     /**
-     * Update the profile
+     * Update the post
      *
      * @return void
      */
@@ -99,9 +100,24 @@ class Posts extends Authenticated
     public function editAction()
     {
         $post_id = $this->route_params['id'];
-        $post = Post::findByID($post_id );
+        $post = $this->post->findByID($post_id);
 
         View::renderWithLayout(Config::VIEWS_PATH . 'Posts/edit.php', [
+            'post' => $post
+        ]);
+
+    }
+
+    /**
+     * View the post
+     *
+     * @return void
+     */
+    public function viewAction()
+    {
+        $post_id = $this->route_params['id'];
+        $post = $this->post->findByID($post_id);
+        View::renderWithLayout(Config::VIEWS_PATH . 'Posts/view.php', [
             'post' => $post
         ]);
     }

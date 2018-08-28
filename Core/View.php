@@ -63,17 +63,6 @@ class View
         }
 
         $current_user = \App\Auth::getUser();
-        $flash_messages = \App\Flash::getMessages();
-
-        $flash = '';
-        if (isset($flash_messages)) {
-            foreach ($flash_messages as $message) {
-                //$message['type']
-                $flash = "<div class=\"alert alert-\"> ";
-                $flash .= $message['body'];
-                $flash .= "</div> ";
-            }
-        }
 
         if ($layout) {
             include Config::VIEWS_PATH . "layout/main.php";

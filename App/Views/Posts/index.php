@@ -16,7 +16,8 @@
             <td>
 
                 <div class="btn-group">
-                    <a href="/posts/edit/<?= $post['id'];?>" class="btn btn-sm btn-default">Edit</a>
+                    <a href="/posts/view/<?= $post['id'];?>" class="btn btn-sm btn-primary">View</a>
+                    <a href="/posts/edit/<?= $post['id'];?>" class="btn btn-sm btn-warning">Edit</a>
                     <a href="/posts/delete/<?= $post['id'];?>" class="btn btn-sm btn-danger">Delete</a>
                 </div>
             </td>
